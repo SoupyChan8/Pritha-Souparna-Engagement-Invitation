@@ -654,25 +654,27 @@ const GlobalParticles = ({ progress }: { progress: MotionValue<number> }) => {
 };
 
 const NightFireworks = ({ progress }: { progress: MotionValue<number> }) => {
-  const fwOpacity = useTransform(progress, [0.65, 0.72], [0, 1]);
+  const fwOpacity = useTransform(progress, [0.65, 0.655, 1], [0, 1, 1]);
 
   return (
     <motion.div
-      style={{ 
-        opacity: fwOpacity,
-        // Optional mask just to soften the very bottom edge slightly, but mostly hidden by couple.
-        maskImage: "linear-gradient(to bottom, black 0%, black 90%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 90%, transparent 100%)"
-      }}
-      className="absolute top-[-25vh] left-0 right-0 bottom-[14%] pointer-events-none z-[12]"
+      style={{ opacity: fwOpacity }}
+      className="absolute inset-x-0 top-[-12.5vh] bottom-[30%] md:bottom-[25%] pointer-events-none z-[12]"
     >
       <Fireworks
         options={{
-          opacity: 0.5,
-          particles: 50,
-          explosion: 6,
-          intensity: 25,
-          rocketsPoint: { min: 48, max: 52 },
+          opacity: 0.9,
+          particles: 100,
+          explosion: 7,
+          intensity: 40,
+          traceLength: 4,
+          traceSpeed: 10,
+          decay: { min: 0.015, max: 0.03 },
+          gravity: 2.5,
+          acceleration: 1.02,
+          friction: 0.96,
+          lineStyle: "round",
+          rocketsPoint: { min: 40, max: 60 },
         }}
         style={{
           top: 0,
