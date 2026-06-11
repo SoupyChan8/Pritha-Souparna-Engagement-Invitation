@@ -152,7 +152,7 @@ export const InvitationPDF = ({ mensImg, womensImg }: { mensImg: string, womensI
             </View>
           </View>
           <View style={styles.quoteContainer}>
-            <Text style={styles.quote}>"Elegance under the stars"</Text>
+            <Text style={styles.quote}>"Where the sun sets... A Promise Is Made"</Text>
           </View>
         </View>
       </Page>
