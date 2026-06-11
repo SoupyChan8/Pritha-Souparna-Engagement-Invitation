@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-editorial: "Libre Baskerville", "Lora", serif;
+}
+
+@keyframes twinkling-star {
+  0%, 100% { opacity: 0.1; transform: scale(0.8) translate3d(0,0,0); }
+  50% { opacity: 1; transform: scale(1.2) translate3d(0,0,0); }
+}
+
+.particle-star {
+  animation: twinkling-star ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+
+.font-script { font-family: 'Allura', cursive; }
+.font-serif { font-family: 'Lora', serif; }
+.font-editorial { font-family: 'Libre Baskerville', serif; }
+.font-sans { font-family: 'Lato', sans-serif; }
+
+/* Custom clip path for triangle shape */
+.clip-triangle {
+  clip-path: polygon(-1% 0, 101% 0, 50% 100%);
+}
+
+.clip-triangle-up {
+  clip-path: polygon(50% 0, -1% 100%, 101% 100%);
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+@keyframes flutter {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.7); }
+}
+
+@keyframes sail {
+  0% { transform: translateX(110vw); }
+  100% { transform: translateX(-30vw); }
+}
+
+@keyframes wave-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.noise-overlay {
+  background-image: repeating-radial-gradient(circle at center, rgba(0,0,0,0.1) 0.5px, transparent 1px, transparent 100%);
+  background-size: 3px 3px;
+  opacity: 0.2;
+}
