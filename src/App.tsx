@@ -999,19 +999,14 @@ export default function App() {
     [0.82, 0.83, 0.96, 0.97],
     [0, 1, 1, 0],
   );
-  const dressCodeTextOp = useTransform(
-    scrollYProgress,
-    [0.82, 0.83, 0.855, 0.865],
-    [0, 1, 1, 0],
-  );
   const mensImgOp = useTransform(
     scrollYProgress,
-    [0.865, 0.875, 0.91, 0.92],
+    [0.82, 0.83, 0.885, 0.895],
     [0, 1, 1, 0],
   );
   const womensImgOp = useTransform(
     scrollYProgress,
-    [0.92, 0.93, 0.96, 0.97],
+    [0.895, 0.905, 0.96, 0.97],
     [0, 1, 1, 0],
   );
 
@@ -1576,9 +1571,9 @@ export default function App() {
               <h3 className="font-editorial tracking-[0.25em] uppercase text-[10px] md:text-sm mb-4 md:mb-6 font-semibold text-amber-900/80 drop-shadow-sm z-10">
                 Together with their families
               </h3>
-              <h1 className="font-serif text-[40px] leading-tight md:text-8xl font-light tracking-wide text-slate-950 pb-2 z-10">
+              <h1 className="font-cursive text-[45px] leading-tight md:text-[90px] font-normal tracking-normal text-slate-950 pb-2 z-10">
                 Pritha
-                <span className="font-serif italic font-normal text-4xl md:text-6xl px-3 md:px-6 text-amber-600 align-middle">
+                <span className="font-cursive font-normal text-[50px] md:text-[100px] px-3 md:px-6 text-amber-600 align-middle">
                   &amp;
                 </span>
                 <br className="md:hidden" />
@@ -1597,7 +1592,7 @@ export default function App() {
               <h3 className="font-editorial tracking-[0.2em] text-[10px] md:text-xs mb-4 md:mb-6 max-w-xs uppercase leading-relaxed font-semibold text-slate-500 z-10">
                 Request the pleasure of your company at the ceremony of their
               </h3>
-              <h1 className="font-serif italic font-light text-5xl md:text-[80px] text-amber-700/95 pb-2 z-10">
+              <h1 className="font-cursive font-normal text-[60px] md:text-[90px] text-amber-700/95 pb-2 z-10">
                 Engagement
               </h1>
             </div>
@@ -1623,7 +1618,7 @@ export default function App() {
               >
                 at the
               </motion.h3>
-              <h1 className="font-serif text-3xl md:text-5xl font-light tracking-wide text-slate-950 mb-3 drop-shadow-sm z-10">
+              <h1 className="font-cursive text-4xl md:text-6xl font-normal tracking-normal text-slate-950 mb-3 drop-shadow-sm z-10">
                 Bombay Beach Resort
               </h1>
               <motion.div
@@ -1818,16 +1813,6 @@ export default function App() {
               </div>
 
               <div className="relative w-full flex-1 flex items-center justify-center mb-2 mt-0 md:mb-4 md:-mt-2 overflow-hidden">
-                <motion.div
-                  style={{ opacity: dressCodeTextOp }}
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 w-full px-2 -mt-4 md:-mt-8"
-                >
-                  <h1 className="font-serif text-2xl md:text-4xl font-light tracking-[0.05em] md:tracking-[0.1em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300 py-1 w-full text-center leading-tight">
-                    Western /<br />
-                    Indo-Western
-                  </h1>
-                </motion.div>
-
                 <motion.div
                   style={{ opacity: mensImgOp }}
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-2 py-2 mt-0 md:-mt-2"
