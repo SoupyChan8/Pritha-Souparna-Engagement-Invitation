@@ -122,7 +122,7 @@ export const InvitationPDF = ({ mensImg, womensImg }: { mensImg: string, womensI
                   <EventRow time="12:00 PM" name="Lunch" iconObj={<UtensilsIcon />} />
                   <EventRow time="6:00 PM" name="Hi-tea" iconObj={<GlassWaterIcon />} />
                   <EventRow time="7:00 PM" name="Engagement" iconObj={<HeartIcon />} />
-                  <EventRow time="8:00 PM" name="DJ Night + Dinner" iconObj={<MusicIcon />} />
+                  <EventRow time="8:00 PM" name="DJ Night" iconObj={<MusicIcon />} />
                 </View>
               </View>
 
