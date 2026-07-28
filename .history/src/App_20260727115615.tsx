@@ -1039,7 +1039,7 @@ export default function App() {
     {
       date: "November 1",
       time: "8:00 PM",
-      name: "DJ Night + Dinner",
+      name: "DJ Night",
       icon: <Music size={18} />,
     },
     {
