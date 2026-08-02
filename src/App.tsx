@@ -698,8 +698,8 @@ export default function App() {
         });
       };
 
-      const mensBase64 = await getBase64("/assets/MensOutfits.webp");
-      const womensBase64 = await getBase64("/assets/WomensOutfits.webp");
+      const mensBase64 = await getBase64("/assets/MensOutfits.png");
+      const womensBase64 = await getBase64("/assets/WomensOutfits.png");
 
       const blob = await pdf(
         <InvitationPDF mensImg={mensBase64} womensImg={womensBase64} />,
@@ -721,10 +721,10 @@ export default function App() {
 
   useEffect(() => {
     const imagesToLoad = [
-      "/assets/arch2.webp",
-      "/assets/couple_2.webp",
-      "/assets/tree.webp",
-      "/assets/rings.webp",
+      "/assets/arch2.png",
+      "/assets/couple_2.png",
+      "/assets/tree.png",
+      "/assets/rings.png",
     ];
     let loadedCount = 0;
 
@@ -1229,7 +1229,7 @@ export default function App() {
 
             {/* Arch Gate Shadow */}
             <motion.img
-              src="/assets/arch2.webp"
+              src="/assets/arch2.png"
               alt="Arch Shadow"
               className="absolute bottom-[6%] md:bottom-[6%] left-1/2 w-[525px] md:w-[900px] max-w-[130vw] md:max-w-none pointer-events-none z-[12]"
               style={{
@@ -1240,13 +1240,13 @@ export default function App() {
                 scaleY: archShadowScaleY,
                 scaleX: 1,
                 skewX: archShadowSkewX,
-                filter: "brightness(0)",
+                filter: "brightness(0) blur(6px)",
               }}
             />
 
             {/* Arch Gate */}
             <motion.img
-              src="/assets/arch2.webp"
+              src="/assets/arch2.png"
               alt="Wedding Arch"
               className="absolute bottom-[6%] md:bottom-[6%] left-1/2 w-[525px] md:w-[900px] max-w-[130vw] md:max-w-none z-[13]"
               style={{
@@ -1258,7 +1258,7 @@ export default function App() {
 
             {/* Couple Shadow */}
             <motion.img
-              src="/assets/couple_2.webp"
+              src="/assets/couple_2.png"
               alt="Couple Shadow"
               className="absolute bottom-[10%] md:bottom-[12%] left-1/2 -translate-x-[25%] w-[250px] md:w-[400px] max-w-[55vw] md:max-w-none pointer-events-none z-[14]"
               style={{
@@ -1268,13 +1268,13 @@ export default function App() {
                 scaleY: archShadowScaleY,
                 scaleX: 1,
                 skewX: archShadowSkewX,
-                filter: "brightness(0)",
+                filter: "brightness(0) blur(6px)",
               }}
             />
 
             {/* Couple in the night */}
             <motion.img
-              src="/assets/couple_2.webp"
+              src="/assets/couple_2.png"
               alt="Couple"
               className="absolute bottom-[10%] md:bottom-[12%] left-1/2 -translate-x-[25%] w-[250px] md:w-[400px] max-w-[55vw] md:max-w-none z-[15] origin-bottom"
               style={{ opacity: coupleImgOp }}
@@ -1283,7 +1283,7 @@ export default function App() {
             {/* Palm Trees (Leaves only) */}
             <div className="absolute top-[-5%] left-[-5%] w-[250px] md:w-[450px] max-w-[50vw] z-30 -scale-x-100">
               <motion.img
-                src="/assets/tree.webp"
+                src="/assets/tree.png"
                 alt="Coconut Leaves"
                 className="w-full h-auto origin-top-right animate-[sway_5s_ease-in-out_infinite]"
                 style={{ filter: sceneFilter }}
@@ -1291,7 +1291,7 @@ export default function App() {
             </div>
             <div className="absolute top-[-5%] right-[-5%] w-[250px] md:w-[450px] max-w-[50vw] z-30">
               <motion.img
-                src="/assets/tree.webp"
+                src="/assets/tree.png"
                 alt="Coconut Leaves"
                 className="w-full h-auto origin-top-right animate-[sway_6s_ease-in-out_infinite]"
                 style={{ filter: sceneFilter }}
@@ -1324,8 +1324,8 @@ export default function App() {
             >
               {/* ENVELOPE BACK (Seen first, rotateY=0) */}
               <div
-                className="absolute inset-0 bg-[#fdfbf7] rounded-md flex items-center justify-center border border-stone-200 overflow-hidden shadow-md"
-                style={{ transform: "rotateY(0deg) translateZ(1px)" }}
+                className="absolute inset-0 bg-[#fdfbf7] rounded-md backface-hidden flex items-center justify-center border border-stone-200 overflow-hidden shadow-md"
+                style={{ transform: "rotateY(0deg) translateZ(-1px)" }}
               >
                 {/* Elegant Vintage Frame */}
                 <div className="w-[90%] h-[85%] border border-amber-700/30 p-1.5 flex flex-col items-center justify-center relative bg-white/50">
@@ -1413,7 +1413,7 @@ export default function App() {
               </div>
               {/* ENVELOPE FRONT (Seen when rotated, rotateY=180) */}
               <div
-                className="absolute inset-0 bg-[#f4f1ea] rounded-md shadow-inner preserve-3d"
+                className="absolute inset-0 bg-[#f4f1ea] rounded-md backface-hidden shadow-inner preserve-3d"
                 style={{ transform: "rotateY(180deg) translateZ(1px)" }}
               >
                 {/* Flap (Rotates up) */}
@@ -1474,7 +1474,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/assets/rose.webp"
+                      src="/assets/rose.PNG"
                       alt="Rose Boutonniere"
                       className="w-full h-full object-contain"
                       onError={(e) => {
@@ -1759,7 +1759,7 @@ export default function App() {
             <div className="bg-[#0b0f19]/80  border border-amber-500/20 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] relative overflow-hidden p-6 md:p-10 md:px-12 flex flex-col items-center max-w-xl mx-auto">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
               <img
-                src="/assets/rings.webp"
+                src="/assets/rings.png"
                 alt="Wedding Rings"
                 className="w-16 h-16 md:w-20 md:h-20 mb-4  object-contain z-10"
               />
@@ -1832,7 +1832,7 @@ export default function App() {
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-2 py-2 mt-0 md:-mt-2"
                 >
                   <img
-                    src="/assets/MensOutfits.webp"
+                    src="/assets/MensOutfits.png"
                     alt="Mens Outfit"
                     className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain  z-10 scale-100 md:scale-105 origin-center"
                   />
@@ -1843,7 +1843,7 @@ export default function App() {
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-2 py-2 mt-0 md:-mt-2"
                 >
                   <img
-                    src="/assets/WomensOutfits.webp"
+                    src="/assets/WomensOutfits.png"
                     alt="Womens Outfit"
                     className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain  z-20 mix-blend-normal relative scale-100 md:scale-105 origin-center translate-x-0.75 md:translate-x-1.5"
                   />
