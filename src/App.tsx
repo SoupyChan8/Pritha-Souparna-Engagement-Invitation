@@ -1421,18 +1421,7 @@ export default function App() {
                   style={{ rotateX: flapRotateX, z: 2 }}
                   className="absolute top-0 inset-x-0 h-[65%] origin-top preserve-3d z-30"
                 >
-                  {/* Hinge cover to prevent rendering gap */}
-                  <div
-                    className="absolute top-0 inset-x-0 h-[2px] bg-[#fdfbf7]"
-                    style={{ transform: "translateY(-1px) translateZ(0.2px)" }}
-                  ></div>
-                  <div
-                    className="absolute top-0 inset-x-0 h-[2px] bg-[#0f172a]"
-                    style={{
-                      transform:
-                        "translateY(-1px) rotateX(180deg) translateZ(0.2px)",
-                    }}
-                  ></div>
+                  
 
                   {/* Inner flap (visible when open) - Stars pattern matching the inner envelope */}
                   <div
@@ -1541,7 +1530,7 @@ export default function App() {
                   </div>
                 </motion.div>
                 {/* Body of Front */}
-                <div className="absolute inset-0 bg-[#fdfbf7] overflow-hidden rounded-md shadow-[inset_0_-10px_20px_rgba(0,0,0,0.02)]">
+                <div className="absolute inset-0 bg-[#fdfbf7] overflow-hidden rounded-md shadow-[inset_0_-10px_20px_rgba(0,0,0,0.02)] backface-hidden">
                   {/* Inner dark pocket - Now starry night to match themes! */}
                   <div className="absolute top-0 inset-x-0 h-2/3 bg-[#0f172a] shadow-[inset_0_-20px_30px_rgba(0,0,0,0.5)] z-10 overflow-hidden">
                     <div className="absolute inset-0 opacity-50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-700 via-slate-900 to-black"></div>
