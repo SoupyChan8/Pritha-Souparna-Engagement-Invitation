@@ -294,7 +294,7 @@ const FlappingBird = ({
 
   return (
     <motion.div
-      className="absolute text-slate-800/40 mix-blend-multiply"
+      className="absolute text-slate-800/40 mix-blend-normal"
       style={{
         left: 0,
         top: 0,
@@ -616,7 +616,7 @@ const GlobalParticles = ({ progress }: { progress: MotionValue<number> }) => {
       <motion.div
         style={{ opacity: starOpacity, position: "absolute", inset: 0 }}
       >
-        {[...Array(60)].map((_, i) => {
+        {[...Array(30)].map((_, i) => {
           const size = 1 + (i % 3) * 1.5; // Sizes 1, 2.5, 4
           const left = `${(i * 17) % 100}%`;
           const top = `${(i * 23) % 100}%`;
@@ -697,11 +697,13 @@ export default function App() {
           reader.readAsDataURL(blob);
         });
       };
-      
-      const mensBase64 = await getBase64("/assets/MensOutfits.png");
-      const womensBase64 = await getBase64("/assets/WomensOutfits.png");
 
-      const blob = await pdf(<InvitationPDF mensImg={mensBase64} womensImg={womensBase64} />).toBlob();
+      const mensBase64 = await getBase64("/assets/MensOutfits.webp");
+      const womensBase64 = await getBase64("/assets/WomensOutfits.webp");
+
+      const blob = await pdf(
+        <InvitationPDF mensImg={mensBase64} womensImg={womensBase64} />,
+      ).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -719,10 +721,10 @@ export default function App() {
 
   useEffect(() => {
     const imagesToLoad = [
-      "/assets/arch2.png",
-      "/assets/couple_2.png",
-      "/assets/tree.png",
-      "/assets/rings.png",
+      "/assets/arch2.webp",
+      "/assets/couple_2.webp",
+      "/assets/tree.webp",
+      "/assets/rings.webp",
     ];
     let loadedCount = 0;
 
@@ -894,12 +896,7 @@ export default function App() {
   const archFilter = useTransform(
     scrollYProgress,
     [0, 0.6, 0.68, 0.72],
-    [
-      "drop-shadow(0px 0px 0px transparent) brightness(1)",
-      "drop-shadow(0px 0px 0px transparent) brightness(0.2)",
-      "drop-shadow(0px 0px 30px rgba(253,224,71,0.5)) brightness(1)",
-      "drop-shadow(0px 0px 40px rgba(254,240,138,0.8)) brightness(1.2)",
-    ],
+    ["brightness(1)", "brightness(0.2)", "brightness(1)", "brightness(1.2)"],
   );
   const archShadowOpacity = useTransform(
     scrollYProgress,
@@ -950,12 +947,12 @@ export default function App() {
   const gateTextY = useTransform(
     scrollYProgress,
     [0.41, 0.43, 0.46, 0.485],
-    ["45vh", "45vh", "45vh", "8vh"]
+    ["45vh", "45vh", "45vh", "8vh"],
   );
   const gateTextScale = useTransform(
     scrollYProgress,
     [0.41, 0.43, 0.46, 0.485],
-    [1.4, 1.4, 1.4, 1]
+    [1.4, 1.4, 1.4, 1],
   );
 
   // Scene 4.5: Couple Night Scene
@@ -1047,7 +1044,6 @@ export default function App() {
 
   return (
     <>
-
       <div
         className={`fixed inset-0 flex flex-col items-center justify-center bg-[#fdfbf7] text-amber-900 z-[100] transition-opacity duration-1000 ${isStarted ? "opacity-0 pointer-events-none" : "opacity-100"}`}
       >
@@ -1161,7 +1157,7 @@ export default function App() {
                 className="absolute top-[-40px] md:top-[-60px] animate-[sail_40s_linear_infinite]"
                 style={{ filter: boatFilter }}
               >
-                <CustomSailboat className="w-40 h-40 md:w-64 md:h-64 drop-shadow-xl" />
+                <CustomSailboat className="w-40 h-40 md:w-64 md:h-64 " />
               </motion.div>
 
               {/* Fore waves */}
@@ -1233,7 +1229,7 @@ export default function App() {
 
             {/* Arch Gate Shadow */}
             <motion.img
-              src="/assets/arch2.png"
+              src="/assets/arch2.webp"
               alt="Arch Shadow"
               className="absolute bottom-[6%] md:bottom-[6%] left-1/2 w-[525px] md:w-[900px] max-w-[130vw] md:max-w-none pointer-events-none z-[12]"
               style={{
@@ -1244,13 +1240,13 @@ export default function App() {
                 scaleY: archShadowScaleY,
                 scaleX: 1,
                 skewX: archShadowSkewX,
-                filter: "brightness(0) blur(6px)",
+                filter: "brightness(0)",
               }}
             />
 
             {/* Arch Gate */}
             <motion.img
-              src="/assets/arch2.png"
+              src="/assets/arch2.webp"
               alt="Wedding Arch"
               className="absolute bottom-[6%] md:bottom-[6%] left-1/2 w-[525px] md:w-[900px] max-w-[130vw] md:max-w-none z-[13]"
               style={{
@@ -1262,7 +1258,7 @@ export default function App() {
 
             {/* Couple Shadow */}
             <motion.img
-              src="/assets/couple_2.png"
+              src="/assets/couple_2.webp"
               alt="Couple Shadow"
               className="absolute bottom-[10%] md:bottom-[12%] left-1/2 -translate-x-[25%] w-[250px] md:w-[400px] max-w-[55vw] md:max-w-none pointer-events-none z-[14]"
               style={{
@@ -1272,13 +1268,13 @@ export default function App() {
                 scaleY: archShadowScaleY,
                 scaleX: 1,
                 skewX: archShadowSkewX,
-                filter: "brightness(0) blur(4px)",
+                filter: "brightness(0)",
               }}
             />
 
             {/* Couple in the night */}
             <motion.img
-              src="/assets/couple_2.png"
+              src="/assets/couple_2.webp"
               alt="Couple"
               className="absolute bottom-[10%] md:bottom-[12%] left-1/2 -translate-x-[25%] w-[250px] md:w-[400px] max-w-[55vw] md:max-w-none z-[15] origin-bottom"
               style={{ opacity: coupleImgOp }}
@@ -1287,7 +1283,7 @@ export default function App() {
             {/* Palm Trees (Leaves only) */}
             <div className="absolute top-[-5%] left-[-5%] w-[250px] md:w-[450px] max-w-[50vw] z-30 -scale-x-100">
               <motion.img
-                src="/assets/tree.png"
+                src="/assets/tree.webp"
                 alt="Coconut Leaves"
                 className="w-full h-auto origin-top-right animate-[sway_5s_ease-in-out_infinite]"
                 style={{ filter: sceneFilter }}
@@ -1295,7 +1291,7 @@ export default function App() {
             </div>
             <div className="absolute top-[-5%] right-[-5%] w-[250px] md:w-[450px] max-w-[50vw] z-30">
               <motion.img
-                src="/assets/tree.png"
+                src="/assets/tree.webp"
                 alt="Coconut Leaves"
                 className="w-full h-auto origin-top-right animate-[sway_6s_ease-in-out_infinite]"
                 style={{ filter: sceneFilter }}
@@ -1328,8 +1324,8 @@ export default function App() {
             >
               {/* ENVELOPE BACK (Seen first, rotateY=0) */}
               <div
-                className="absolute inset-0 bg-[#fdfbf7] rounded-md backface-hidden flex items-center justify-center border border-stone-200 overflow-hidden shadow-md"
-                style={{ transform: "rotateY(0deg) translateZ(-1px)" }}
+                className="absolute inset-0 bg-[#fdfbf7] rounded-md flex items-center justify-center border border-stone-200 overflow-hidden shadow-md"
+                style={{ transform: "rotateY(0deg) translateZ(1px)" }}
               >
                 {/* Elegant Vintage Frame */}
                 <div className="w-[90%] h-[85%] border border-amber-700/30 p-1.5 flex flex-col items-center justify-center relative bg-white/50">
@@ -1341,7 +1337,7 @@ export default function App() {
                     <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-amber-700/60" />
 
                     {/* Mock Postage Stamp */}
-                    <div className="absolute top-3 right-3 w-8 h-10 border border-amber-900/10 bg-[#fdfbf6] flex flex-col items-center justify-center p-0.5 rounded-sm shadow-sm rotate-2 mix-blend-multiply">
+                    <div className="absolute top-3 right-3 w-8 h-10 border border-amber-900/10 bg-[#fdfbf6] flex flex-col items-center justify-center p-0.5 rounded-sm shadow-sm rotate-2 mix-blend-normal">
                       <div className="w-full h-full border border-amber-900/15 rounded-sm opacity-70 flex flex-col items-center justify-between py-0.5 overflow-hidden relative">
                         {/* Postal cancellation lines */}
                         <div className="absolute inset-0 flex flex-col justify-center gap-[2px] rotate-[-25deg] opacity-[0.15] pointer-events-none scale-150 -translate-y-1">
@@ -1376,7 +1372,7 @@ export default function App() {
                       <div className="w-8 h-[1px] bg-amber-900/40" />
 
                       {/* Minimalist floral crest */}
-                      <div className="py-2 md:py-3 z-10 flex items-center justify-center opacity-80 mix-blend-multiply">
+                      <div className="py-2 md:py-3 z-10 flex items-center justify-center opacity-80 mix-blend-normal">
                         <svg
                           width="56"
                           height="56"
@@ -1411,13 +1407,13 @@ export default function App() {
                         under the stars
                       </span>
                     </div>
-                    <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-overlay pointer-events-none"></div>
+                    <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-normal pointer-events-none"></div>
                   </div>
                 </div>
               </div>
               {/* ENVELOPE FRONT (Seen when rotated, rotateY=180) */}
               <div
-                className="absolute inset-0 bg-[#f4f1ea] rounded-md backface-hidden shadow-inner preserve-3d"
+                className="absolute inset-0 bg-[#f4f1ea] rounded-md shadow-inner preserve-3d"
                 style={{ transform: "rotateY(180deg) translateZ(1px)" }}
               >
                 {/* Flap (Rotates up) */}
@@ -1426,8 +1422,17 @@ export default function App() {
                   className="absolute top-0 inset-x-0 h-[65%] origin-top preserve-3d z-30"
                 >
                   {/* Hinge cover to prevent rendering gap */}
-                  <div className="absolute top-0 inset-x-0 h-[2px] bg-[#fdfbf7]" style={{ transform: "translateY(-1px) translateZ(0.2px)" }}></div>
-                  <div className="absolute top-0 inset-x-0 h-[2px] bg-[#0f172a]" style={{ transform: "translateY(-1px) rotateX(180deg) translateZ(0.2px)" }}></div>
+                  <div
+                    className="absolute top-0 inset-x-0 h-[2px] bg-[#fdfbf7]"
+                    style={{ transform: "translateY(-1px) translateZ(0.2px)" }}
+                  ></div>
+                  <div
+                    className="absolute top-0 inset-x-0 h-[2px] bg-[#0f172a]"
+                    style={{
+                      transform:
+                        "translateY(-1px) rotateX(180deg) translateZ(0.2px)",
+                    }}
+                  ></div>
 
                   {/* Inner flap (visible when open) - Stars pattern matching the inner envelope */}
                   <div
@@ -1436,7 +1441,7 @@ export default function App() {
                   >
                     <div className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-700 via-slate-900 to-black clip-triangle-up"></div>
                     <div className="absolute top-[20%] left-[30%] w-0.5 h-0.5 bg-amber-100 rounded-full"></div>
-                    <div className="absolute top-[40%] right-[40%] w-1 h-1 bg-amber-100 rounded-full blur-[0.5px]"></div>
+                    <div className="absolute top-[40%] right-[40%] w-1 h-1 bg-amber-100 rounded-full "></div>
                   </div>
 
                   {/* Outer flap */}
@@ -1445,7 +1450,7 @@ export default function App() {
                     style={{ transform: "translateZ(0.5px)" }}
                   >
                     {/* Inner styling of flap */}
-                    <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-overlay clip-triangle"></div>
+                    <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-normal clip-triangle"></div>
                     <svg
                       className="absolute inset-0 w-full h-full pointer-events-none"
                       preserveAspectRatio="none"
@@ -1462,22 +1467,36 @@ export default function App() {
                   </div>
 
                   {/* Decorative Rose Accent (Tucked under the seal) */}
-                  <div 
-                    className="absolute bottom-0 left-1/2 w-24 h-32 md:w-32 md:h-44 z-30 pointer-events-none drop-shadow-md preserve-3d"
-                    style={{ transform: "translate3d(-60%, 30%, 0.8px) rotate(-20deg)" }}
+                  <div
+                    className="absolute bottom-0 left-1/2 w-24 h-32 md:w-32 md:h-44 z-30 pointer-events-none  preserve-3d"
+                    style={{
+                      transform: "translate3d(-60%, 30%, 0.8px) rotate(-20deg)",
+                    }}
                   >
-                    <img 
-                      src="/assets/rose.PNG" 
-                      alt="Rose Boutonniere" 
+                    <img
+                      src="/assets/rose.webp"
+                      alt="Rose Boutonniere"
                       className="w-full h-full object-contain"
                       onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'block';
+                        e.currentTarget.style.display = "none";
+                        const fallback = e.currentTarget
+                          .nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "block";
                       }}
                     />
                     {/* Fallback elegant floral SVG */}
-                    <svg className="w-full h-full text-amber-900/40 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }}>
+                    <svg
+                      className="w-full h-full text-amber-900/40 hidden"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="0.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{
+                        filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))",
+                      }}
+                    >
                       <path d="M12 22c0-4.5-4-8-9-10 4 0 8 3 9 10" />
                       <path d="M12 22c0-4.5 4-8 9-10-4 0-8 3-9 10" />
                       <path d="M12 22V12" />
@@ -1485,7 +1504,13 @@ export default function App() {
                       <path d="M12 12c2-3 4-5 7-7-3 1-6 4-7 7" />
                       <path d="M10 8c-1-2-2-3-3.5-4.5 1.5.5 3 2 3.5 4.5" />
                       <path d="M14 8c1-2 2-3 3.5-4.5-1.5.5-3 2-3.5 4.5" />
-                      <circle cx="12" cy="7" r="2.5" fill="#fcd34d" stroke="none" />
+                      <circle
+                        cx="12"
+                        cy="7"
+                        r="2.5"
+                        fill="#fcd34d"
+                        stroke="none"
+                      />
                     </svg>
                   </div>
 
@@ -1500,18 +1525,18 @@ export default function App() {
                       style={{ transform: "translateZ(1px)" }}
                     >
                       <div className="absolute inset-1 rounded-full border border-[#9c1c1c]/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] flex items-center justify-center">
-                        <span className="font-editorial text-amber-100/90 text-[11px] md:text-sm tracking-widest font-semibold drop-shadow-[0_1px_1px_rgba(0,0,0,1)] pr-[1px] md:pr-[2px]">
+                        <span className="font-editorial text-amber-100/90 text-[11px] md:text-sm tracking-widest font-semibold ">
                           P&amp;S
                         </span>
                       </div>
-                      <div className="absolute top-[15%] right-[20%] w-3 h-3 bg-white/10 rounded-full blur-[2px]" />
+                      <div className="absolute top-[15%] right-[20%] w-3 h-3 bg-white/10 rounded-full " />
                     </div>
                     {/* Back of Seal (Seen when flap opens) */}
                     <div
                       className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#2a0000] to-[#4a0000] shadow-inner flex items-center justify-center backface-hidden border border-black/40"
                       style={{ transform: "rotateX(180deg) translateZ(1px)" }}
                     >
-                      <div className="w-[80%] h-[80%] rounded-full bg-[#3a0000] shadow-inner filter blur-[1px]"></div>
+                      <div className="w-[80%] h-[80%] rounded-full bg-[#3a0000] shadow-inner "></div>
                     </div>
                   </div>
                 </motion.div>
@@ -1520,14 +1545,14 @@ export default function App() {
                   {/* Inner dark pocket - Now starry night to match themes! */}
                   <div className="absolute top-0 inset-x-0 h-2/3 bg-[#0f172a] shadow-[inset_0_-20px_30px_rgba(0,0,0,0.5)] z-10 overflow-hidden">
                     <div className="absolute inset-0 opacity-50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-700 via-slate-900 to-black"></div>
-                    <div className="absolute top-[20%] left-[20%] w-1 h-1 bg-amber-100 rounded-full blur-[0.5px]"></div>
+                    <div className="absolute top-[20%] left-[20%] w-1 h-1 bg-amber-100 rounded-full "></div>
                     <div className="absolute top-[40%] right-[30%] w-0.5 h-0.5 bg-amber-100 rounded-full"></div>
-                    <div className="absolute top-[30%] left-[60%] w-1.5 h-1.5 bg-amber-200/80 rounded-full blur-[1px]"></div>
+                    <div className="absolute top-[30%] left-[60%] w-1.5 h-1.5 bg-amber-200/80 rounded-full "></div>
                   </div>
 
                   {/* Envelope body flaps using clip-path to expose only the exact top pocket triangle */}
                   <div
-                    className="absolute inset-0 z-20 pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.02)]"
+                    className="absolute inset-0 z-20 pointer-events-none "
                     style={{ transform: "translateZ(1px)" }}
                   >
                     <div
@@ -1539,12 +1564,12 @@ export default function App() {
                     />
                     {/* Creases to separate the side panels and bottom panel */}
                     <div className="absolute inset-0 z-20 pointer-events-none">
-                      <div className="absolute inset-0 border-t border-amber-900/5 rotate-45 scale-150 origin-bottom-left blur-[0.5px] translate-y-1/3"></div>
-                      <div className="absolute inset-0 border-t border-amber-900/5 -rotate-45 scale-150 origin-bottom-right blur-[0.5px] translate-y-1/3"></div>
+                      <div className="absolute inset-0 border-t border-amber-900/5 rotate-45 scale-150 origin-bottom-left  translate-y-1/3"></div>
+                      <div className="absolute inset-0 border-t border-amber-900/5 -rotate-45 scale-150 origin-bottom-right  translate-y-1/3"></div>
                     </div>
                   </div>
 
-                  <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-overlay z-30 pointer-events-none"></div>
+                  <div className="absolute inset-0 noise-overlay opacity-30 mix-blend-normal z-30 pointer-events-none"></div>
                 </div>
               </div>
             </motion.div>
@@ -1553,11 +1578,11 @@ export default function App() {
           {/* ----- SCENE 1: NAMES ----- */}
           <motion.div
             style={{ opacity: nOp }}
-            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none drop-shadow-xl"
+            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none "
           >
-            <div className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center">
+            <div className="bg-[#fdfbf8]/95  border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center">
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
-              <h3 className="font-editorial tracking-[0.25em] uppercase text-[10px] md:text-sm mb-4 md:mb-6 font-semibold text-amber-900/80 drop-shadow-sm z-10">
+              <h3 className="font-editorial tracking-[0.25em] uppercase text-[10px] md:text-sm mb-4 md:mb-6 font-semibold text-amber-900/80  z-10">
                 Together with their families
               </h3>
               <h1 className="font-cursive text-[45px] leading-tight md:text-[90px] font-normal tracking-normal text-slate-950 pb-2 z-10">
@@ -1574,9 +1599,9 @@ export default function App() {
           {/* ----- SCENE 2: ENGAGEMENT ----- */}
           <motion.div
             style={{ opacity: eOp }}
-            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none drop-shadow-xl"
+            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none "
           >
-            <div className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center max-w-lg">
+            <div className="bg-[#fdfbf8]/95  border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center max-w-lg">
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
               <h3 className="font-editorial tracking-[0.2em] text-[10px] md:text-xs mb-4 md:mb-6 max-w-xs uppercase leading-relaxed font-semibold text-slate-500 z-10">
                 Request the pleasure of your company at the ceremony of their
@@ -1590,7 +1615,7 @@ export default function App() {
           {/* ----- SCENE 3: VENUE ----- */}
           <motion.div
             style={{ opacity: vOp }}
-            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none drop-shadow-xl w-full"
+            className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none  w-full"
           >
             <motion.div
               style={{
@@ -1598,7 +1623,7 @@ export default function App() {
                   v > 0.05 ? "auto" : "none",
                 ) as any,
               }}
-              className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:px-14 flex flex-col items-center max-w-[90vw] md:max-w-2xl w-full"
+              className="bg-[#fdfbf8]/95  border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:px-14 flex flex-col items-center max-w-[90vw] md:max-w-2xl w-full"
             >
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
               <motion.h3
@@ -1607,7 +1632,7 @@ export default function App() {
               >
                 at the
               </motion.h3>
-              <h1 className="font-cursive text-4xl md:text-6xl font-normal tracking-normal text-slate-950 mb-3 drop-shadow-sm z-10">
+              <h1 className="font-cursive text-4xl md:text-6xl font-normal tracking-normal text-slate-950 mb-3  z-10">
                 Bombay Beach Resort
               </h1>
               <motion.div
@@ -1631,7 +1656,7 @@ export default function App() {
                 {/* Overlay to capture clicks */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d87.708227!3d21.6652341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a03255a182e0a3f%3A0xe23d5112894ed644!2sBombay%20Beach%20Resort!5e0!3m2!1sen!2sus!4v1718023530000!5m2!1sen!2sus"
-                  className="absolute inset-0 w-full h-full grayscale opacity-80 mix-blend-multiply transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:mix-blend-normal pointer-events-none"
+                  className="absolute inset-0 w-full h-full grayscale opacity-80 mix-blend-normal transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:mix-blend-normal pointer-events-none"
                   style={{ border: 0 }}
                   loading="lazy"
                   title="Venue Map"
@@ -1729,14 +1754,14 @@ export default function App() {
           {/* ----- SCENE 4.5: NIGHT CELEBRATION ----- */}
           <motion.div
             style={{ opacity: coupleTextOp }}
-            className="absolute inset-0 flex flex-col items-center justify-start pt-[10vh] md:pt-[12vh] text-center p-6 text-amber-100 z-50 pointer-events-none drop-shadow-[0_4px_15px_rgba(0,0,0,0.6)]"
+            className="absolute inset-0 flex flex-col items-center justify-start pt-[10vh] md:pt-[12vh] text-center p-6 text-amber-100 z-50 pointer-events-none "
           >
-            <div className="bg-[#0b0f19]/80 backdrop-blur-sm border border-amber-500/20 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] relative overflow-hidden p-6 md:p-10 md:px-12 flex flex-col items-center max-w-xl mx-auto">
+            <div className="bg-[#0b0f19]/80  border border-amber-500/20 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] relative overflow-hidden p-6 md:p-10 md:px-12 flex flex-col items-center max-w-xl mx-auto">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
               <img
-                src="/assets/rings.png"
+                src="/assets/rings.webp"
                 alt="Wedding Rings"
-                className="w-16 h-16 md:w-20 md:h-20 mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)] object-contain z-10"
+                className="w-16 h-16 md:w-20 md:h-20 mb-4  object-contain z-10"
               />
               <h3 className="tracking-[0.25em] font-editorial italic text-base md:text-xl mb-1.5 opacity-90 text-amber-100/90 font-light z-10">
                 Where the sun sets...
@@ -1752,7 +1777,7 @@ export default function App() {
             style={{ opacity: guestOp }}
             className="absolute inset-0 flex flex-col items-center justify-start pt-[10vh] md:pt-[12vh] text-center p-6 text-slate-100 z-50 pointer-events-none"
           >
-            <div className="bg-[#0b0f19]/90 rounded-2xl p-8 md:p-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-sm">
+            <div className="bg-[#0b0f19]/90 rounded-2xl p-8 md:p-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center w-[90%] max-w-lg mx-auto relative overflow-hidden ">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
 
               <div className="text-3xl mb-4">🥂</div>
@@ -1786,13 +1811,13 @@ export default function App() {
               <Sparkles size={24} strokeWidth={1} />
             </motion.div>
 
-            <div className="bg-[#0b0f19]/90 rounded-2xl pt-8 pb-4 px-8 md:pt-12 md:pb-6 md:px-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-sm min-h-[380px] md:min-h-[460px]">
+            <div className="bg-[#0b0f19]/90 rounded-2xl pt-8 pb-4 px-8 md:pt-12 md:pb-6 md:px-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between w-[90%] max-w-lg mx-auto relative overflow-hidden  min-h-[380px] md:min-h-[460px]">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
 
               <div className="flex flex-col items-center w-full z-10 pt-0">
                 <div className="mb-3 md:mb-5 p-2 md:p-3 rounded-none border border-amber-500/25 bg-slate-900/60 shadow-lg transform rotate-45 mx-auto">
                   <Heart
-                    className="w-4 md:w-5 h-4 md:h-5 text-amber-400/90 -rotate-45 drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]"
+                    className="w-4 md:w-5 h-4 md:h-5 text-amber-400/90 -rotate-45 "
                     strokeWidth={1.2}
                   />
                 </div>
@@ -1807,9 +1832,9 @@ export default function App() {
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-2 py-2 mt-0 md:-mt-2"
                 >
                   <img
-                    src="/assets/MensOutfits.png"
+                    src="/assets/MensOutfits.webp"
                     alt="Mens Outfit"
-                    className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain drop-shadow-xl z-10 scale-100 md:scale-105 origin-center"
+                    className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain  z-10 scale-100 md:scale-105 origin-center"
                   />
                 </motion.div>
 
@@ -1818,9 +1843,9 @@ export default function App() {
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-2 py-2 mt-0 md:-mt-2"
                 >
                   <img
-                    src="/assets/WomensOutfits.png"
+                    src="/assets/WomensOutfits.webp"
                     alt="Womens Outfit"
-                    className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain drop-shadow-xl z-20 mix-blend-normal relative scale-100 md:scale-105 origin-center translate-x-0.75 md:translate-x-1.5"
+                    className="h-[85%] w-auto md:h-[95%] md:w-auto md:max-w-[26rem] object-contain  z-20 mix-blend-normal relative scale-100 md:scale-105 origin-center translate-x-0.75 md:translate-x-1.5"
                   />
                 </motion.div>
               </div>
@@ -1843,7 +1868,7 @@ export default function App() {
                 v > 0.05 ? "auto" : "none",
               ) as any,
             }}
-            className="absolute inset-0 flex flex-col items-center justify-center p-4 z-[60] bg-slate-950/80 backdrop-blur-sm"
+            className="absolute inset-0 flex flex-col items-center justify-center p-4 z-[60] bg-slate-950/80 "
           >
             <div className="w-full max-w-md bg-[#fdfdfa] rounded-xl p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center text-center border border-amber-900/20 relative overflow-hidden">
               {/* Decorative border inside card */}
@@ -1895,7 +1920,7 @@ export default function App() {
               </a>
 
               <div className="w-full group z-10 mt-3">
-                <button 
+                <button
                   onClick={handleDownloadPdf}
                   disabled={isGeneratingPdf}
                   className="w-full bg-[#fdfbf8] hover:bg-amber-50 text-amber-950 border border-amber-900/20 font-editorial tracking-[0.1em] uppercase text-[10px] md:text-xs py-3.5 rounded-none transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait"
@@ -1904,7 +1929,9 @@ export default function App() {
                     size={16}
                     className="group-hover:translate-y-[-2px] transition-transform duration-300"
                   />
-                  <div>{isGeneratingPdf ? "Generating..." : "Download PDF"}</div>
+                  <div>
+                    {isGeneratingPdf ? "Generating..." : "Download PDF"}
+                  </div>
                 </button>
               </div>
             </div>
@@ -1912,7 +1939,7 @@ export default function App() {
         </motion.div>
         <button
           onClick={toggleMusic}
-          className="fixed bottom-4 md:bottom-8 right-4 md:right-8 z-[200] p-3 md:p-4 bg-black/40 backdrop-blur-sm rounded-full border border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:bg-white/20 transition-all ease-in-out duration-300 cursor-pointer"
+          className="fixed bottom-4 md:bottom-8 right-4 md:right-8 z-[200] p-3 md:p-4 bg-black/40  rounded-full border border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:bg-white/20 transition-all ease-in-out duration-300 cursor-pointer"
           aria-label="Toggle music"
         >
           {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
