@@ -795,6 +795,7 @@ export default function App() {
   // Envelope Rotations
   const envelopeRotateY = useTransform(scrollYProgress, [0, 0.05], [0, 180]);
   const flapRotateX = useTransform(scrollYProgress, [0.05, 0.08], [0, 180]);
+  const flapTranslateY = useTransform(scrollYProgress, [0.05, 0.08], ["0px", "1.5px"]);
   // Envelope floats down when wave comes
   const envelopeY = useTransform(
     scrollYProgress,
@@ -1418,7 +1419,7 @@ export default function App() {
               >
                 {/* Flap (Rotates up) */}
                 <motion.div
-                  style={{ rotateX: flapRotateX, z: 2 }}
+                  style={{ rotateX: flapRotateX, y: flapTranslateY, z: 2 }}
                   className="absolute top-0 inset-x-0 h-[65%] origin-top preserve-3d z-30"
                 >
                   
