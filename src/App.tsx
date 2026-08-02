@@ -300,6 +300,7 @@ const FlappingBird = ({
         top: 0,
         scaleX: flip ? -scale : scale,
         scaleY: scale,
+        willChange: "transform",
       }}
       animate={{
         x: [startX, endX],
@@ -329,36 +330,24 @@ const FlappingBird = ({
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <motion.path
-            animate={{
-              d: [
-                "M 20 10 Q 10 0 2 6",
-                "M 20 10 Q 10 16 2 12",
-                "M 20 10 Q 10 0 2 6",
-              ],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: flapDuration,
-              ease: "easeInOut",
-              delay,
-            }}
-          />
-          <motion.path
-            animate={{
-              d: [
-                "M 20 10 Q 30 0 38 6",
-                "M 20 10 Q 30 16 38 12",
-                "M 20 10 Q 30 0 38 6",
-              ],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: flapDuration,
-              ease: "easeInOut",
-              delay,
-            }}
-          />
+          <path d="M 20 10 Q 10 0 2 6">
+            <animate
+              attributeName="d"
+              values="M 20 10 Q 10 0 2 6; M 20 10 Q 10 16 2 12; M 20 10 Q 10 0 2 6"
+              dur={`${flapDuration}s`}
+              begin={`${delay}s`}
+              repeatCount="indefinite"
+            />
+          </path>
+          <path d="M 20 10 Q 30 0 38 6">
+            <animate
+              attributeName="d"
+              values="M 20 10 Q 30 0 38 6; M 20 10 Q 30 16 38 12; M 20 10 Q 30 0 38 6"
+              dur={`${flapDuration}s`}
+              begin={`${delay}s`}
+              repeatCount="indefinite"
+            />
+          </path>
         </svg>
       </motion.div>
     </motion.div>
@@ -664,7 +653,7 @@ const NightFireworks = ({ progress }: { progress: MotionValue<number> }) => {
       <Fireworks
         options={{
           opacity: 0.9,
-          particles: 100,
+          particles: 60,
           explosion: 7,
           intensity: 40,
           traceLength: 4,
@@ -1566,7 +1555,7 @@ export default function App() {
             style={{ opacity: nOp }}
             className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none drop-shadow-xl"
           >
-            <div className="bg-[#fdfbf8]/95 backdrop-blur-md border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center">
+            <div className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center">
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
               <h3 className="font-editorial tracking-[0.25em] uppercase text-[10px] md:text-sm mb-4 md:mb-6 font-semibold text-amber-900/80 drop-shadow-sm z-10">
                 Together with their families
@@ -1587,7 +1576,7 @@ export default function App() {
             style={{ opacity: eOp }}
             className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-slate-900 z-40 pointer-events-none drop-shadow-xl"
           >
-            <div className="bg-[#fdfbf8]/95 backdrop-blur-md border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center max-w-lg">
+            <div className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:p-14 md:px-16 flex flex-col items-center max-w-lg">
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
               <h3 className="font-editorial tracking-[0.2em] text-[10px] md:text-xs mb-4 md:mb-6 max-w-xs uppercase leading-relaxed font-semibold text-slate-500 z-10">
                 Request the pleasure of your company at the ceremony of their
@@ -1609,7 +1598,7 @@ export default function App() {
                   v > 0.05 ? "auto" : "none",
                 ) as any,
               }}
-              className="bg-[#fdfbf8]/95 backdrop-blur-md border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:px-14 flex flex-col items-center max-w-[90vw] md:max-w-2xl w-full"
+              className="bg-[#fdfbf8]/95 backdrop-blur-sm border border-amber-900/15 rounded-2xl shadow-[0_15px_40px_rgba(139,92,26,0.1)] relative overflow-hidden p-8 md:px-14 flex flex-col items-center max-w-[90vw] md:max-w-2xl w-full"
             >
               <div className="absolute inset-2 border border-amber-800/15 rounded-xl pointer-events-none" />
               <motion.h3
@@ -1742,7 +1731,7 @@ export default function App() {
             style={{ opacity: coupleTextOp }}
             className="absolute inset-0 flex flex-col items-center justify-start pt-[10vh] md:pt-[12vh] text-center p-6 text-amber-100 z-50 pointer-events-none drop-shadow-[0_4px_15px_rgba(0,0,0,0.6)]"
           >
-            <div className="bg-[#0b0f19]/80 backdrop-blur-md border border-amber-500/20 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] relative overflow-hidden p-6 md:p-10 md:px-12 flex flex-col items-center max-w-xl mx-auto">
+            <div className="bg-[#0b0f19]/80 backdrop-blur-sm border border-amber-500/20 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] relative overflow-hidden p-6 md:p-10 md:px-12 flex flex-col items-center max-w-xl mx-auto">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
               <img
                 src="/assets/rings.png"
@@ -1763,7 +1752,7 @@ export default function App() {
             style={{ opacity: guestOp }}
             className="absolute inset-0 flex flex-col items-center justify-start pt-[10vh] md:pt-[12vh] text-center p-6 text-slate-100 z-50 pointer-events-none"
           >
-            <div className="bg-[#0b0f19]/90 rounded-2xl p-8 md:p-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-lg">
+            <div className="bg-[#0b0f19]/90 rounded-2xl p-8 md:p-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-sm">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
 
               <div className="text-3xl mb-4">🥂</div>
@@ -1797,7 +1786,7 @@ export default function App() {
               <Sparkles size={24} strokeWidth={1} />
             </motion.div>
 
-            <div className="bg-[#0b0f19]/90 rounded-2xl pt-8 pb-4 px-8 md:pt-12 md:pb-6 md:px-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-lg min-h-[380px] md:min-h-[460px]">
+            <div className="bg-[#0b0f19]/90 rounded-2xl pt-8 pb-4 px-8 md:pt-12 md:pb-6 md:px-12 border border-amber-950/80 shadow-[0_15px_50px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between w-[90%] max-w-lg mx-auto relative overflow-hidden backdrop-blur-sm min-h-[380px] md:min-h-[460px]">
               <div className="absolute inset-2 border border-amber-500/10 rounded-xl pointer-events-none" />
 
               <div className="flex flex-col items-center w-full z-10 pt-0">
@@ -1923,7 +1912,7 @@ export default function App() {
         </motion.div>
         <button
           onClick={toggleMusic}
-          className="fixed bottom-4 md:bottom-8 right-4 md:right-8 z-[200] p-3 md:p-4 bg-black/40 backdrop-blur-md rounded-full border border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:bg-white/20 transition-all ease-in-out duration-300 cursor-pointer"
+          className="fixed bottom-4 md:bottom-8 right-4 md:right-8 z-[200] p-3 md:p-4 bg-black/40 backdrop-blur-sm rounded-full border border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:bg-white/20 transition-all ease-in-out duration-300 cursor-pointer"
           aria-label="Toggle music"
         >
           {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}

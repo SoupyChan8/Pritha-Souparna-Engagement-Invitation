@@ -1,0 +1,14 @@
+<style>
+@keyframes flutter-wing {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(-0.5); }
+}
+.bird-wing {
+  transform-origin: 20px 10px;
+  animation: flutter-wing 0.8s ease-in-out infinite;
+}
+</style>
+<svg width="40" height="20" viewBox="0 0 40 20" stroke="black" stroke-width="2" fill="none">
+  <path class="bird-wing" d="M 20 10 Q 10 0 2 6" />
+  <path class="bird-wing" d="M 20 10 Q 30 0 38 6" />
+</svg>

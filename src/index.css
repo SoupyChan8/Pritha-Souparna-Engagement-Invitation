@@ -60,7 +60,6 @@
 }
 
 .noise-overlay {
-  background-image: repeating-radial-gradient(circle at center, rgba(0,0,0,0.1) 0.5px, transparent 1px, transparent 100%);
-  background-size: 3px 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='3'%3E%3Ccircle cx='1.5' cy='1.5' r='0.5' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E");
   opacity: 0.2;
 }
