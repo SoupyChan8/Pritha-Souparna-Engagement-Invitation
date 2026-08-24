@@ -1,6 +1,6 @@
 {
-  "name": "Souparna \u0026 Pritha Engagement 3",
+  "name": "Souparna & Pritha Engagement 3",
   "description": "Interactive animated engagement invitation",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

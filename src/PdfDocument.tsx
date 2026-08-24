@@ -22,37 +22,42 @@ Font.register({
 });
 
 Font.register({
-  family: "Parisienne",
-  src: "https://fonts.gstatic.com/s/parisienne/v14/E21i_d3kivvAkxhLEVZpcy8.ttf"
+  family: "Great Vibes",
+  src: "https://fonts.gstatic.com/s/greatvibes/v21/RWmMoKWR9v4ksMfaWd_JN9XFiaE.ttf"
 });
 
 const styles = StyleSheet.create({
   page: { padding: 40, backgroundColor: "#fdfbf8", fontFamily: "Libre Baskerville", color: "#451a03", border: "12pt solid #451a03" },
   innerBorder: { margin: 10, border: "1pt solid #451a03", flex: 1, padding: 30, display: "flex", flexDirection: "column", alignItems: "center", position: "relative" },
   titleSmall: { fontSize: 16, fontStyle: "italic", textAlign: "center", marginBottom: 20, opacity: 0.8 },
-  titleLarge: { fontFamily: "Parisienne", fontSize: 50, textAlign: "center", marginBottom: 5 },
-  titleAmpersand: { fontFamily: "Parisienne", fontSize: 40, textAlign: "center", marginBottom: 5, color: "#d97706" },
+  titleLarge: { fontFamily: "Great Vibes", fontSize: 50, textAlign: "center", marginBottom: 5 },
+  titleAmpersand: { fontFamily: "Great Vibes", fontSize: 40, textAlign: "center", marginBottom: 5, color: "#d97706" },
   subtitle: { fontSize: 14, fontStyle: "italic", textAlign: "center", marginBottom: 5, marginTop: 10, opacity: 0.8 },
-  titleEngagement: { fontFamily: "Parisienne", fontSize: 60, textAlign: "center", marginBottom: 20, color: "#b45309" },
+  titleEngagement: { fontFamily: "Great Vibes", fontSize: 60, textAlign: "center", marginBottom: 20, color: "#b45309" },
   dateBox: { textAlign: "center", marginBottom: 15 },
   dateTitle: { fontSize: 24, textAlign: "center", marginBottom: 5, tracking: 2, textTransform: "uppercase" },
-  venueName: { fontFamily: "Parisienne", fontSize: 28, textAlign: "center", fontWeight: "normal", opacity: 0.9, marginBottom: 5 },
+  venueName: { fontFamily: "Great Vibes", fontSize: 28, textAlign: "center", fontWeight: "normal", opacity: 0.9, marginBottom: 5 },
   venueLocation: { fontSize: 9, textAlign: "center", textTransform: "uppercase", opacity: 0.8 },
   linkBox: { display: "flex", flexDirection: "row", justifyContent: "center", gap: 15, marginBottom: 15 },
   linkAnchor: { fontSize: 10, fontFamily: "Inter", fontWeight: 500, color: "#854d0e", textDecoration: "none", borderBottom: "1pt solid #854d0e", paddingBottom: 2 },
   sectionHeader: { fontFamily: "Inter", fontSize: 10, tracking: 2, textTransform: "uppercase", fontWeight: 600, opacity: 0.7, marginBottom: 15, marginTop: 10, textAlign: "center" },
-  dressCodeTitle: { fontSize: 22, fontStyle: "italic", textAlign: "center", marginBottom: 20, opacity: 0.9 },
+  dressCodeTitle: { fontSize: 22, fontStyle: "italic", textAlign: "center", marginBottom: 5, opacity: 0.9 },
   eventRow: { display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 6, width: "100%", justifyContent: "space-between" },
   eventTime: { fontSize: 11, opacity: 0.8, width: "35%", textAlign: "left" },
   eventNameBox: { display: "flex", flexDirection: "row", alignItems: "center", width: "65%", justifyContent: "flex-end" },
   eventNameText: { fontSize: 12, marginRight: 8, textAlign: "right" },
   eventIcon: { width: 14, height: 14 },
-  page2Image: { width: "100%", height: 210, objectFit: "contain", position: "absolute", bottom: 10 },
-  dressCodeImages: { display: "flex", flexDirection: "column", justifyContent: "center", gap: 20, marginBottom: 10, marginTop: 0, alignItems: "center", width: "100%" },
-  dressCodeContainer: { width: "100%", height: 230, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", position: "relative" },
+  page2Image: { width: "100%", height: 160, objectFit: "contain", position: "absolute", bottom: 10 },
+  dressCodeImages: { display: "flex", flexDirection: "column", justifyContent: "center", gap: 15, marginBottom: 10, marginTop: 0, alignItems: "center", width: "100%" },
+  dressCodeContainer: { width: "100%", height: 170, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", position: "relative" },
   dressCodeFloor: { position: "absolute", bottom: -5, width: "100%", height: 60 },
   quoteContainer: { position: "absolute", bottom: 30, left: 0, right: 0, alignItems: "center" },
-  quote: { fontSize: 16, fontStyle: "italic", textAlign: "center", opacity: 0.8 }
+  quote: { fontSize: 16, fontStyle: "italic", textAlign: "center", opacity: 0.8, marginBottom: 15 },
+  notesContainer: { width: "85%", marginTop: 15, paddingTop: 15, borderTop: "1pt solid #451a03", opacity: 0.85 },
+  notesHeader: { fontFamily: "Inter", fontSize: 10, tracking: 2, textTransform: "uppercase", fontWeight: 600, marginBottom: 10, textAlign: "center" },
+  noteItem: { display: "flex", flexDirection: "row", marginBottom: 6, alignItems: "flex-start" },
+  noteBullet: { fontSize: 9, marginRight: 6, marginTop: 0 },
+  noteText: { fontSize: 9, fontFamily: "Inter", lineHeight: 1.4 }
 });
 
 const UtensilsIcon = () => (
@@ -142,6 +147,7 @@ export const InvitationPDF = ({ mensImg, womensImg }: { mensImg: string, womensI
         <View style={styles.innerBorder}>
           <View style={{ flex: 1, display: "flex", justifyContent: "center", width: "100%", alignItems: "center" }}>
             <Text style={styles.dressCodeTitle}>Dress code for the ceremony</Text>
+            <Text style={styles.quote}>"Elegance under the stars"</Text>
             <View style={styles.dressCodeImages}>
               <View style={styles.dressCodeContainer}>
                 <Svg viewBox="0 0 100 30" style={styles.dressCodeFloor}>
@@ -155,12 +161,28 @@ export const InvitationPDF = ({ mensImg, womensImg }: { mensImg: string, womensI
                 </Svg>
                 <Image src={mensImg} style={styles.page2Image} />
               </View>
+                        </View>
+            <View style={styles.notesContainer}>
+              <Text style={styles.notesHeader}>Gentle Reminders</Text>
+              <View style={styles.noteItem}>
+                <Text style={styles.noteBullet}>•</Text>
+                <Text style={styles.noteText}>Please carry a valid ID (Aadhaar preferred) for a smooth resort check-in.</Text>
+              </View>
+              <View style={styles.noteItem}>
+                <Text style={styles.noteBullet}>•</Text>
+                <Text style={styles.noteText}>As our celebrations extend to the lawns, we suggest block heels or flats over stilettos.</Text>
+              </View>
+              <View style={styles.noteItem}>
+                <Text style={styles.noteBullet}>•</Text>
+                <Text style={styles.noteText}>November evenings by the sea can be delightfully breezy; we recommend bringing a light layer.</Text>
+              </View>
+              <View style={styles.noteItem}>
+                <Text style={styles.noteBullet}>•</Text>
+                <Text style={styles.noteText}>Don't forget your swimwear if you plan to enjoy the resort's pool!</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.quoteContainer}>
-            <Text style={styles.quote}>"Elegance under the stars"</Text>
-          </View>
-        </View>
+</View>
       </Page>
     </Document>
   );

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Allura&family=Parisienne&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Allura&family=Parisienne&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-editorial: "Libre Baskerville", "Lora", serif;
-  --font-cursive: "Parisienne", cursive;
+  --font-cursive: "Great Vibes", cursive;
 }
 
 @keyframes twinkling-star {
@@ -20,7 +20,7 @@
 .preserve-3d { transform-style: preserve-3d; }
 .backface-hidden { backface-visibility: hidden; }
 
-.font-script { font-family: 'Allura', cursive; }
+.font-script { font-family: 'Great Vibes', cursive; }
 .font-serif { font-family: 'Lora', serif; }
 .font-editorial { font-family: 'Libre Baskerville', serif; }
 .font-sans { font-family: 'Lato', sans-serif; }
@@ -64,3 +64,17 @@
   opacity: 0.2;
 }
 
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body {
+  overflow-x: hidden;
+}

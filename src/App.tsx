@@ -21,6 +21,7 @@ import {
   Volume2,
   VolumeX,
   Feather,
+  Leaf,
 } from "lucide-react";
 import { Fireworks } from "@fireworks-js/react";
 
@@ -227,43 +228,62 @@ const AnimatedCard = ({
   index,
 }: {
   key?: React.Key;
-  progress: MotionValue<number>;
+  progress: import("framer-motion").MotionValue<number>;
   card: { date: string; time: string; name: string; icon: React.ReactNode };
   index: number;
 }) => {
   const startIn = 0.48 + index * 0.015;
   const endIn = startIn + 0.02;
+
   const opacity = useTransform(
     progress,
-    [startIn, endIn, 0.62, 0.65],
+    [startIn, endIn, 0.66, 0.69],
     [0, 1, 1, 0],
   );
-  const y = useTransform(progress, [startIn, endIn], ["40px", "0px"]);
+
+  const isEven = index % 2 === 0;
+  const xStart = isEven ? "-200vw" : "200vw";
+  const x = useTransform(progress, [startIn, endIn], [xStart, "0px"]);
+
+  const rotateStart = isEven ? -15 : 15;
+  const rotate = useTransform(progress, [startIn, endIn], [rotateStart, 0]);
 
   return (
     <motion.div
       style={{
         opacity,
-        y,
+        x,
+        rotate,
         pointerEvents: useTransform(opacity, (v) =>
           v > 0.01 ? "auto" : "none",
         ) as any,
       }}
-      className="w-full h-full"
+      className="w-full"
     >
       <motion.div
-        whileHover={{ scale: 1.04, y: -6 }}
+        whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="bg-[#fdfbf7] rounded-xl p-4 shadow-md hover:shadow-xl border border-amber-900/15 flex flex-col items-center justify-center text-center gap-2 h-full cursor-pointer transition-shadow duration-300 relative overflow-hidden"
+        className={`bg-[#fdfbf7] rounded-xl p-3 md:p-4 shadow-md hover:shadow-xl border border-amber-900/15 flex ${isEven ? "flex-row" : "flex-row-reverse"} items-center justify-start gap-4 w-full cursor-pointer transition-shadow duration-300 relative overflow-hidden`}
       >
         <div className="absolute inset-1 border border-amber-600/10 rounded-lg pointer-events-none" />
-        <div className="text-amber-700 mb-1 scale-105">{card.icon}</div>
-        <div className="font-editorial text-sm md:text-base font-semibold tracking-[0.15em] text-amber-900 uppercase">
-          {card.time}
+        <div className={`absolute ${isEven ? "right-10 md:right-16" : "left-10 md:left-16"} top-1/2 -translate-y-1/2 flex items-center justify-center text-amber-900/[0.05] pointer-events-none select-none z-0`}>
+          <div className="relative flex items-center justify-center scale-[4] md:scale-[5] [&_svg]:!stroke-[1.5px]">
+            <Leaf size={20} className="absolute -left-4 -top-3 -rotate-45 opacity-50" />
+            <Leaf size={20} className="absolute -right-4 -bottom-3 rotate-[135deg] opacity-50" />
+            {card.icon}
+          </div>
         </div>
-        <div className="w-8 h-px bg-amber-900/20 my-1 md:my-1.5" />
-        <div className="font-serif text-[13px] md:text-sm text-slate-800 font-medium leading-snug">
-          {card.name}
+        <div className="text-amber-700 bg-amber-100/50 p-3 rounded-lg shrink-0 scale-105 relative z-10">
+          {card.icon}
+        </div>
+        <div className="w-px h-8 bg-amber-900/20 shrink-0 relative z-10" />
+        <div className={`flex flex-col ${isEven ? "text-left" : "text-right"} justify-center flex-1 relative z-10`}>
+          <div className="font-editorial text-xs md:text-sm font-semibold tracking-[0.15em] text-amber-900 uppercase">
+            {card.time}
+          </div>
+          <div className="font-serif text-[13px] md:text-[15px] text-slate-800 font-medium leading-snug mt-0.5">
+            {card.name}
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -679,7 +699,10 @@ const NightFireworks = ({ progress }: { progress: MotionValue<number> }) => {
 
 export default function App() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const introAudioRef = useRef<HTMLAudioElement>(null);
+  const hookAudioRef = useRef<HTMLAudioElement>(null);
+  const activeTrackRef = useRef<"intro" | "hook">("intro");
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
@@ -725,46 +748,140 @@ export default function App() {
       "/assets/couple_2.png",
       "/assets/tree.png",
       "/assets/rings.png",
+      "/assets/MensOutfits.png",
+      "/assets/WomensOutfits.png",
     ];
-    let loadedCount = 0;
-
-    imagesToLoad.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === imagesToLoad.length) {
-          setIsReady(true);
-        }
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === imagesToLoad.length) {
-          setIsReady(true);
-        }
-      };
+    Promise.all([
+      document.fonts.ready,
+      ...imagesToLoad.map(
+        (src) =>
+          new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = resolve;
+            img.onerror = resolve;
+          })
+      ),
+    ]).then(() => {
+      setIsReady(true);
     });
   }, []);
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const doCrossfade = (fadeOutAudio, fadeInAudio, targetTrack, startVolFadeOut, endVolFadeOut, startVolFadeIn, endVolFadeIn) => {
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+
+    fadeOutAudio.volume = startVolFadeOut;
+    fadeInAudio.volume = startVolFadeIn;
+    
+    if (targetTrack === 'hook') {
+        fadeInAudio.currentTime = 0; 
+    }
+    fadeInAudio.play().catch(()=>{});
+
+    const steps = 30; // 30 steps * 50ms = 1.5 seconds
+    const intervalMs = 50; 
+    let currentStep = 0;
+
+    fadeIntervalRef.current = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
+        
+        fadeOutAudio.volume = Math.max(0, Math.min(1, startVolFadeOut + (endVolFadeOut - startVolFadeOut) * progress));
+        fadeInAudio.volume = Math.max(0, Math.min(1, startVolFadeIn + (endVolFadeIn - startVolFadeIn) * progress));
+
+        if (currentStep >= steps) {
+            clearInterval(fadeIntervalRef.current);
+            fadeIntervalRef.current = null;
+            if (endVolFadeOut === 0) {
+                fadeOutAudio.pause();
+            }
+            fadeOutAudio.volume = endVolFadeOut;
+            fadeInAudio.volume = endVolFadeIn;
+        }
+    }, intervalMs);
+  };
+
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+    return scrollYProgress.on("change", (latest) => {
+      if (!isPlaying) return;
+
+      const intro = introAudioRef.current;
+      const hook = hookAudioRef.current;
+      if (!intro || !hook) return;
+
+      const CROSSFADE_POINT = 0.66; // Just after cards stack up
+      const FADE_START_POINT = 0.56; // Last card stacks up
+
+      if (latest >= CROSSFADE_POINT && activeTrackRef.current === 'intro') {
+        activeTrackRef.current = 'hook';
+        doCrossfade(intro, hook, 'hook', intro.volume, 0, 0, 1);
+      } else if (latest < CROSSFADE_POINT && activeTrackRef.current === 'hook') {
+        activeTrackRef.current = 'intro';
+        doCrossfade(hook, intro, 'intro', hook.volume, 0, 0, 0.5);
+      }
+
+      // Handle the 100% to 50% fade based on scroll
+      if (activeTrackRef.current === 'intro' && !fadeIntervalRef.current) {
+         if (latest <= FADE_START_POINT) {
+             intro.volume = 1;
+         } else if (latest > FADE_START_POINT && latest <= CROSSFADE_POINT) {
+             intro.volume = Math.max(0, Math.min(1, 1 - 0.5 * ((latest - FADE_START_POINT) / (CROSSFADE_POINT - FADE_START_POINT))));
+         }
+      }
+    });
+  }, [scrollYProgress, isPlaying]);
+
+  useEffect(() => {
+    const intro = introAudioRef.current;
+    const hook = hookAudioRef.current;
+    if (!intro || !hook) return;
 
     if (isPlaying) {
-      audio.play().catch((e) => {
-        console.warn("Autoplay blocked, waiting for user interaction:", e);
-        const playOnInteract = () => {
-          if (isPlaying) audio.play().catch(() => {});
-          window.removeEventListener("click", playOnInteract);
-          window.removeEventListener("touchstart", playOnInteract);
-          window.removeEventListener("scroll", playOnInteract);
-        };
-        window.addEventListener("click", playOnInteract);
-        window.addEventListener("touchstart", playOnInteract);
-        window.addEventListener("scroll", playOnInteract, { once: true });
-      });
+       const latest = scrollYProgress.get();
+       const CROSSFADE_POINT = 0.66;
+       const FADE_START_POINT = 0.56;
+
+       let currentAudio;
+       if (latest >= CROSSFADE_POINT) {
+           activeTrackRef.current = 'hook';
+           intro.volume = 0;
+           hook.volume = 1;
+           currentAudio = hook;
+       } else {
+           activeTrackRef.current = 'intro';
+           let vol = 1;
+           if (latest > FADE_START_POINT && latest <= CROSSFADE_POINT) {
+               vol = 1 - 0.5 * ((latest - FADE_START_POINT) / (CROSSFADE_POINT - FADE_START_POINT));
+           }
+           intro.volume = vol;
+           hook.volume = 0;
+           currentAudio = intro;
+       }
+       
+       currentAudio.play().catch(e => {
+          console.warn("Autoplay blocked:", e);
+          const playOnInteract = () => {
+            if (isPlaying) currentAudio.play().catch(()=>{});
+            window.removeEventListener("click", playOnInteract);
+            window.removeEventListener("touchstart", playOnInteract);
+            window.removeEventListener("scroll", playOnInteract);
+          };
+          window.addEventListener("click", playOnInteract);
+          window.addEventListener("touchstart", playOnInteract);
+          window.addEventListener("scroll", playOnInteract, { once: true });
+       });
     } else {
-      audio.pause();
+       intro.pause();
+       hook.pause();
+       if (fadeIntervalRef.current) {
+          clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = null;
+       }
     }
   }, [isPlaying]);
 
@@ -787,10 +904,10 @@ export default function App() {
     setIsPlaying(!isPlaying);
   };
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+
+
+
+
 
   // Envelope Rotations
   const envelopeRotateY = useTransform(scrollYProgress, [0, 0.05], [0, 180]);
@@ -939,16 +1056,18 @@ export default function App() {
     [0, 1, 1, 0],
   );
   // Dramatic zoom effect (simplified without arch)
-  const gateScale = useTransform(scrollYProgress, [0.62, 0.68], [1, 4]);
+  const gateScale = useTransform(scrollYProgress, [0.62, 0.68], [1, 1]);
+  const cardsTranslateY = useTransform(scrollYProgress, [0.54, 0.69], ["0vh", "-150vh"]);
+
   const gateTextOp = useTransform(
     scrollYProgress,
-    [0.41, 0.43, 0.62, 0.65],
+    [0.41, 0.43, 0.66, 0.69],
     [0, 1, 1, 0],
   );
   const gateTextY = useTransform(
     scrollYProgress,
-    [0.41, 0.43, 0.46, 0.485],
-    ["45vh", "45vh", "45vh", "8vh"],
+    [0.41, 0.43, 0.46, 0.485, 0.54, 0.62, 0.65, 0.69],
+    ["45vh", "45vh", "45vh", "8vh", "8vh", "-62vh", "-62vh", "-172vh"],
   );
   const gateTextScale = useTransform(
     scrollYProgress,
@@ -1577,7 +1696,8 @@ export default function App() {
               </h3>
               <h1 className="font-cursive text-[45px] leading-tight md:text-[90px] font-normal tracking-normal text-slate-950 pb-2 z-10">
                 Pritha
-                <span className="font-cursive font-normal text-[50px] md:text-[100px] px-3 md:px-6 text-amber-600 align-middle">
+                <br className="md:hidden" />
+                <span className="font-cursive font-normal text-[50px] leading-[0.8] md:text-[100px] px-0 md:px-6 text-amber-600 align-middle inline-block py-2 md:py-0">
                   &amp;
                 </span>
                 <br className="md:hidden" />
@@ -1677,19 +1797,20 @@ export default function App() {
             <motion.div
               style={{
                 scale: gateScale,
+                y: cardsTranslateY,
                 pointerEvents: useTransform(gateOpacity, (v) =>
                   v > 0.05 ? "auto" : "none",
                 ) as any,
               }}
-              className="absolute top-[20%] md:top-[22%] w-[90%] max-w-4xl mx-auto z-30 perspective-1000 flex flex-col items-center gap-6 md:gap-8 origin-center"
+              className="absolute top-[15%] md:top-[20%] w-full inset-x-0 z-30 perspective-1000 flex flex-col items-center gap-6 md:gap-8 origin-center h-auto overflow-visible pb-32 md:pb-12 hide-scrollbar"
             >
               {/* Day 1 */}
-              <div className="w-full">
+              <div className="w-full max-w-xl mx-auto px-4 md:px-0">
                 <motion.div
                   style={{
                     opacity: useTransform(
                       scrollYProgress,
-                      [0.48, 0.5, 0.62, 0.65],
+                      [0.48, 0.5, 0.66, 0.69],
                       [0, 1, 1, 0],
                     ),
                   }}
@@ -1699,7 +1820,7 @@ export default function App() {
                     Day 1
                   </span>
                 </motion.div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <div className="flex flex-col gap-3 md:gap-4 w-full">
                   {events.slice(0, 4).map((card, idx) => (
                     <AnimatedCard
                       key={idx}
@@ -1712,12 +1833,12 @@ export default function App() {
               </div>
 
               {/* Day 2 */}
-              <div className="w-full max-w-sm md:max-w-md">
+              <div className="w-full max-w-xl mx-auto px-4 md:px-0">
                 <motion.div
                   style={{
                     opacity: useTransform(
                       scrollYProgress,
-                      [0.54, 0.56, 0.62, 0.65],
+                      [0.54, 0.56, 0.66, 0.69],
                       [0, 1, 1, 0],
                     ),
                   }}
@@ -1727,7 +1848,7 @@ export default function App() {
                     Day 2
                   </span>
                 </motion.div>
-                <div className="grid grid-cols-2 gap-3 md:gap-4 w-full">
+                <div className="flex flex-col gap-3 md:gap-4 w-full">
                   {events.slice(4).map((card, idx) => (
                     <AnimatedCard
                       key={idx + 4}
@@ -1775,9 +1896,8 @@ export default function App() {
               <h2 className="font-serif text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300 mb-5 font-light tracking-wide z-10 uppercase">
                 Be our guest
               </h2>
-              <p className="font-serif italic text-sm md:text-base text-amber-100/80 mb-2 whitespace-pre-line leading-relaxed z-10 font-normal">
-                We request the honour of your presence {"\n"}as we celebrate
-                this special chapter {"\n"}of our lives.
+              <p className="font-serif italic text-sm md:text-base text-amber-100/80 mb-2 leading-relaxed z-10 font-normal max-w-[280px] md:max-w-md mx-auto">
+                We request the honour of your presence as we celebrate this special chapter of our lives.
               </p>
             </div>
           </motion.div>
@@ -1934,7 +2054,8 @@ export default function App() {
         >
           {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
         </button>
-        <audio ref={audioRef} src="/assets/ordinary.mp3" loop />
+        <audio ref={introAudioRef} src="/assets/Intro.mp3" loop />
+        <audio ref={hookAudioRef} src="/assets/hook.mp3" loop />
       </div>
     </>
   );
