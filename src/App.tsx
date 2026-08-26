@@ -8,6 +8,7 @@ import {
   MotionValue,
   useMotionValue,
   useSpring,
+  AnimatePresence,
 } from "motion/react";
 import {
   MapPin,
@@ -22,6 +23,12 @@ import {
   VolumeX,
   Feather,
   Leaf,
+  Info,
+  X,
+  CreditCard,
+  Footprints,
+  Wind,
+  Waves,
 } from "lucide-react";
 import { Fireworks } from "@fireworks-js/react";
 
@@ -705,6 +712,7 @@ export default function App() {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
@@ -2029,6 +2037,16 @@ export default function App() {
                   </div>
                 </button>
               </div>
+              {/* Gentle Reminders Info Button */}
+              <motion.button 
+                 onClick={() => setIsInfoOpen(true)}
+                 className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-amber-950/10 border border-amber-900/30 flex items-center justify-center text-amber-950 hover:bg-amber-900 hover:text-amber-50 transition-colors shadow-sm"
+                 animate={{ scale: [1, 1.1, 1] }}
+                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                 title="Important Details"
+              >
+                  <Info size={16} />
+              </motion.button>
             </div>
           </motion.div>
         </motion.div>
@@ -2042,6 +2060,77 @@ export default function App() {
         <audio ref={introAudioRef} src="/assets/Intro.mp3" loop />
         <audio ref={hookAudioRef} src="/assets/hook.mp3" loop />
       </div>
+
+      {/* Gentle Reminders Modal */}
+      <AnimatePresence>
+      {isInfoOpen && (
+        <motion.div 
+          className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div 
+            className="w-full max-w-md bg-[#fdfdfa] rounded-xl p-6 md:p-8 shadow-2xl border border-amber-900/20 relative"
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+          >
+            <button 
+              onClick={() => setIsInfoOpen(false)}
+              className="absolute top-4 right-4 p-2 text-amber-900/50 hover:text-amber-950 transition-colors"
+            >
+              <X size={20} />
+            </button>
+            
+            <h3 className="font-serif italic text-2xl text-amber-950 mb-6 text-center">Gentle Reminders</h3>
+            
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-amber-50 rounded-lg shrink-0 text-amber-700">
+                  <CreditCard size={20} />
+                </div>
+                <div>
+                  <h4 className="font-editorial uppercase tracking-wider text-sm font-bold text-amber-950 mb-1">Valid ID</h4>
+                  <p className="text-sm text-amber-900/80 leading-relaxed font-light">Please carry a valid ID (Aadhaar preferred) for a smooth resort check-in.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-amber-50 rounded-lg shrink-0 text-amber-700">
+                  <Footprints size={20} />
+                </div>
+                <div>
+                  <h4 className="font-editorial uppercase tracking-wider text-sm font-bold text-amber-950 mb-1">Footwear</h4>
+                  <p className="text-sm text-amber-900/80 leading-relaxed font-light">As our celebrations extend to the lawns, we suggest block heels or flats over stilettos.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-amber-50 rounded-lg shrink-0 text-amber-700">
+                  <Wind size={20} />
+                </div>
+                <div>
+                  <h4 className="font-editorial uppercase tracking-wider text-sm font-bold text-amber-950 mb-1">Breezy Evenings</h4>
+                  <p className="text-sm text-amber-900/80 leading-relaxed font-light">November evenings by the sea can be delightfully breezy; we recommend bringing a light layer.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-amber-50 rounded-lg shrink-0 text-amber-700">
+                  <Waves size={20} />
+                </div>
+                <div>
+                  <h4 className="font-editorial uppercase tracking-wider text-sm font-bold text-amber-950 mb-1">Pool Access</h4>
+                  <p className="text-sm text-amber-900/80 leading-relaxed font-light">Don't forget your swimwear if you plan to enjoy the resort's pool!</p>
+                </div>
+              </div>
+            </div>
+            
+          </motion.div>
+        </motion.div>
+      )}
+      </AnimatePresence>
     </>
   );
 }
